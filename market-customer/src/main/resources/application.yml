@@ -1,0 +1,26 @@
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: mysql
+    open-in-view: false
+  datasource:
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 10
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+server:
+  port: 8082
