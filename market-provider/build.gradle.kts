@@ -39,6 +39,9 @@ dependencies {
 
     //mysql
     runtimeOnly("mysql:mysql-connector-java")
+
+    //security
+    implementation("org.springframework.boot:spring-boot-starter-security")
 }
 
 allOpen {
