@@ -1,4 +1,4 @@
-package com.example.marketcustomer.global.consumer
+package com.example.marketcustomer.global.kafka
 
 import com.example.marketcustomer.domain.model.OrderEntity
 import com.example.marketcustomer.domain.service.SaveOrderService
