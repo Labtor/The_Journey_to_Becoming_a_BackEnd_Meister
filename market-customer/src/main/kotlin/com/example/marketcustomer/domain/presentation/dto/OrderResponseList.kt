@@ -1,11 +1,14 @@
 package com.example.marketcustomer.domain.presentation.dto
 
-data class OrderResponseList(
-    val orders: List<OrderElement>,
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
+
+data class OrderResponseList @JsonCreator constructor(
+    @JsonProperty("orders") val orders: List<OrderElement>,
 )
 
-data class OrderElement(
-    val id: Long,
-    val name: String,
-    val price: Int,
+data class OrderElement @JsonCreator constructor(
+    @JsonProperty("id") val id: Long,
+    @JsonProperty("name") val name: String,
+    @JsonProperty("price") val price: Int
 )

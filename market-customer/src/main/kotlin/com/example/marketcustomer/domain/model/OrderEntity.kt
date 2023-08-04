@@ -13,7 +13,19 @@ class OrderEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
 
-    val name: String,
+    name: String,
 
-    val price: Int,
-)
+    price: Int,
+) {
+
+    var name: String = name
+        protected set
+
+    var price: Int = price
+        protected set
+
+    fun updateGit(name: String, price: Int) {
+        this.name = name
+        this.price = price
+    }
+}
