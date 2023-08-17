@@ -1,6 +1,5 @@
 package com.example.marketcustomer.domain.presentation
 
-import com.example.marketcustomer.domain.model.OrderEntity
 import com.example.marketcustomer.domain.presentation.dto.OrderElement
 import com.example.marketcustomer.domain.presentation.dto.OrderResponseList
 import com.example.marketcustomer.domain.service.DeleteOrderService

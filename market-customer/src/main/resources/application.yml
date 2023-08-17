@@ -4,6 +4,9 @@ spring:
   web:
     resources:
       add-mappings: false
+  batch:
+    jdbc:
+      initialize-schema: always
   jpa:
     hibernate:
       ddl-auto: update

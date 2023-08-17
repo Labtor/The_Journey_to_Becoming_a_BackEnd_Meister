@@ -55,6 +55,12 @@ dependencies {
 
     //redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+    //batch
+    implementation("org.springframework.boot:spring-boot-starter-batch")
+
+    //quartz scheduler
+    implementation("org.springframework.boot:spring-boot-starter-quartz")
 }
 
 allOpen {
