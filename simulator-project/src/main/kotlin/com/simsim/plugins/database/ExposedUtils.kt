@@ -1,5 +1,6 @@
 package com.simsim.plugins.database
 
+import com.simsim.persistence.api.ApiTable
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import io.ktor.events.Events
@@ -20,7 +21,7 @@ fun Events.connectExposed(): DisposableHandle = subscribe(ApplicationStarted) { 
 
         Database.connect(ExposedDataSource(config)).also { database: Database ->
             val tables: Array<Table> = arrayOf(
-
+                ApiTable
             )
 
             transaction(database) {
