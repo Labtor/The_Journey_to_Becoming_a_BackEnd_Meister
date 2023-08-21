@@ -90,7 +90,7 @@ class BatchConfig(
             .build()
     }
 
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     fun launchJob() {
         val jobParameterMap = mapOf("requestDate" to JobParameter(OffsetDateTime.now().toString()))
         jobLauncher.run(exportJob(), JobParameters(jobParameterMap))
