@@ -8,11 +8,18 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationStarted
 import io.ktor.server.config.ApplicationConfig
 import kotlinx.coroutines.DisposableHandle
+import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.dao.id.IdTable
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.Key
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.addLogger
+import org.jetbrains.exposed.sql.statements.InsertStatement
+import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun Events.connectExposed(): DisposableHandle = subscribe(ApplicationStarted) { application: Application ->
@@ -55,3 +62,19 @@ private class ExposedDataSource(
         private const val URL: String = "url"
     }
 }
+
+class InsertOrUpdate<Key : Any>(
+    private val onDuplicateColumn: Column<Key>,
+    table: Table,
+    isIgnore: Boolean
+) : InsertStatement<Key>(table, isIgnore) {
+    override fun prepareSQL(transaction: Transaction): String =
+        super.prepareSQL(transaction) + " ON DUPLICATE KEY UPDATE ${transaction.identity(onDuplicateColumn)}=VALUES(${transaction.identity(onDuplicateColumn)})"
+}
+
+fun <Key : Comparable<Key>, T : IdTable<Key>> T.insertOrUpdate(body: T.(InsertStatement<EntityID<Key>>) -> Unit) =
+    InsertOrUpdate(this.id, this, false).run {
+        body(this)
+        execute(TransactionManager.current())
+        get(id)
+    }
